@@ -7,6 +7,7 @@ const connectDB = require("./db");
 const userRouter = require("./routes/user.routes");
 const movieRouter = require("./routes/movies.routes");
 const MovieModel = require("./models/MovieMode.model");
+const shortid = require("shortid");
 app.use(cors());
 app.use(express.json());
 
@@ -22,12 +23,26 @@ const io = new Server(server, {
 });
 let rooms = { js: undefined };
 io.on("connection", (socket) => {
+	socket.on("create_room", () => {
+		let roomId = shortid.generate();
+		// console.log(roomId);
+		// rooms[roomId + ""] = {
+		// 	users: 0,
+		// };
+		// socket.join(roomId);
+		// console.log(io.sockets.adapter.rooms.get(roomId).size);
+		// console.log(rooms);
+		socket.emit("room_created", roomId);
+	});
+
 	socket.on("join_room", (data) => {
+		console.log(io.sockets.adapter.rooms);
 		try {
 			if (io.sockets.adapter.rooms.get(data).size < 2) {
 				console.log(`user ${socket.id} joined room ${data}`);
 				const tmp = data + "";
 				socket.join(tmp);
+				socket.emit("joined_room", data);
 				console.log(io.sockets.adapter.rooms.get(tmp).size);
 			} else {
 				socket.emit("room_full");
@@ -35,15 +50,33 @@ io.on("connection", (socket) => {
 		} catch (e) {
 			socket.join(data);
 		}
-		// socket.join(data);
-		// console.log(io.sockets.adapter.rooms.get(data).size);
+		console.log(rooms);
+		// const { roomId, player } = data;
+		// if (rooms[roomId + ""]) {
+		// 	if (rooms[roomId + ""].users < 2) {
+		// 		rooms[roomId + ""].users++;
+		// 		rooms[roomId + ""][socket.id] = {
+		// 			name: player,
+		// 			score: 0,
+		// 			roomId: roomId,
+		// 		};
+		// 		socket.emit("joined_room", {
+		// 			...rooms[roomId + ""][socket.id],
+		// 		});
+		// 	} else {
+		// 		socket.emit("room_full");
+		// 	}
+		// } else {
+		// 	console.log("does not exist");
+		// 	socket.emit("room_not_found");
+		// }
 	});
 	socket.on("send_message", (data) => {
-		console.log(data);
+		// console.log(data);
 		socket.to(data.room).emit("recieved_message", data.msg);
 	});
 	socket.on("buzzer_click", (data) => {
-		console.log(socket.id);
+		// console.log(socket.id);
 		socket.to(data.room).emit("buzzer_rang", false);
 	});
 
@@ -56,12 +89,31 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("start_game", (data) => {
-		if (io.sockets.adapter.rooms.get(data.room).size != 2) {
+		try {
+			if (io.sockets.adapter.rooms.get(data.room).size != 2) {
+				socket.emit("not_full", false);
+			} else {
+				io.to(data.room).emit("game_begins", true);
+				// socket.emit("game_begins", true);
+			}
+		} catch (error) {
 			socket.emit("not_full", false);
-		} else {
-			io.to(data.room).emit("game_begins", true);
-			// socket.emit("game_begins", true);
 		}
+		// console.log(rooms[data.room]);
+		// if (rooms[data.room].users < 2) {
+		// 	socket.emit("not_full", false);
+		// } else {
+		// 	io.to(data.room).emit("game_begins", true);
+		// }
+	});
+
+	socket.on("inc_score", (data) => {
+		// console.log(data);
+		rooms[data.roomId + ""][socket.id].score = data.score;
+		// rooms[data.roomId + ""][socket.id][score] = data.score;
+		console.log(rooms[data.roomId + ""][socket.id]);
+		io.sockets.in(data.roomId).emit("new_score", true);
+		// socket.emit("new_score", true);
 	});
 
 	socket.on("disconnect", () => {

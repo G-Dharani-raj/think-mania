@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 
 interface props {
 	name: string;
-	emojis: string[];
+	emojis: string;
 }
 
 const Page = () => {
@@ -13,10 +13,14 @@ const Page = () => {
 	const [msg, setMsg] = useState("");
 	const [room, setRoom] = useState("");
 	const [res, setRes] = useState("");
+	const [current, setCurrent] = useState("");
 	const [name, setName] = useState("");
 	const [enabled, setEnabled] = useState(true);
 	const [start, setStart] = useState(false);
 	const [movie, setMovie] = useState<props[]>([]);
+	const [newRoom, setNewRoom] = useState<string>("");
+	const [score, setScore] = useState<number>(0);
+	const [user, setUser] = useState<string>("");
 	const sendMessage = () => {
 		socket.emit("send_message", { msg, room });
 	};
@@ -37,7 +41,17 @@ const Page = () => {
 	const startGame = () => {
 		socket.emit("start_game", { room });
 	};
+	const createRoom = () => {
+		socket.emit("create_room");
+	};
+	const incScore = () => socket.emit("inc_score", { room });
 	useEffect(() => {
+		socket.on("room_created", (roomId) => {
+			setCurrent(roomId);
+			setRoom(roomId);
+			joinRoom();
+		});
+		socket.on("joined_room", (roomId) => setCurrent(roomId));
 		socket.on("recieved_message", (msg) => {
 			console.log(msg);
 			setRes(msg);
@@ -60,6 +74,8 @@ const Page = () => {
 			setStart(data);
 			getMovie();
 		});
+		socket.on("not_full", (data) => console.log(data));
+		socket.on("room_created", (data) => setNewRoom(data));
 	}, [socket]);
 
 	return (
@@ -94,10 +110,18 @@ const Page = () => {
 			<Button onClick={getMovie}> get movie</Button>
 			<Button onClick={startGame}>Start game</Button>
 			<Heading>{start ? "Game started" : "Not Started"}</Heading>
+			<Box>{movie.length > 0 ? movie[0].emojis : ""}</Box>
+			<Button onClick={createRoom}>Create Room</Button>
+			<Heading>new room - </Heading>
+			<Heading>{current}</Heading>
 			<Box>
-				{movie.length > 0
-					? movie[0].emojis.map((e) => <li>{e}</li>)
-					: ""}
+				<Input
+					type="text"
+					value={user}
+					onChange={(e) => setUser(e.target.value)}
+				/>
+				<Button onClick={incScore}>Inc</Button>
+				<Heading>{score}</Heading>
 			</Box>
 		</div>
 	);
