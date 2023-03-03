@@ -70,10 +70,11 @@ const Game: React.FC = () => {
   };
   return (
     <Box
-      backgroundImage={`url(${background})`}
-      backgroundSize="cover"
-      backgroundRepeat="no-repeat"
-      h="100vh"
+    backgroundImage={`url(${background})`}
+    backgroundSize={{base:"cover",md:"cover",lg:"cover"}}
+    backgroundPosition="center"
+    backgroundRepeat="no-repeat"
+    h={{base:"100vh",md:"100vh",lg:"100vh"}}
       filter="grayscale(25%) brightness(70%)"
     >
       <Modal isOpen={showModal} onClose={() => {}}>
@@ -85,7 +86,7 @@ const Game: React.FC = () => {
           <ModalHeader
             m="auto"
             letterSpacing={3}
-            fontSize="5xl"
+            fontSize={{base:"5xl",md:"8xl",lg:"5xl"}}
             fontWeight="extrabold"
             color="white"
           >
@@ -95,7 +96,7 @@ const Game: React.FC = () => {
             m="auto"
             color="yellow"
             mt="-1rem"
-            fontSize={"lg"}
+            fontSize={{base:"lg",md:"2xl",lg:"lg"}}
             letterSpacing={2}
           >
             Game On, Brainiacs!
@@ -112,42 +113,85 @@ const Game: React.FC = () => {
               <Box
                 p="20px"
                 color="white"
-                mt="8"
+                mt={{base:"8",md:"30",lg:"8"}}
                 m="auto"
                 bg={showLogo ? "none" : "#8d2949"}
                 rounded="md"
                 shadow="2xl"
-                w="400px"
+                w={{base:"300px",md:"350px",lg:"400px"}}
                 h="auto"
+               
               >
-                {showLogo ? (
-                  <Lottie
-                    style={{ width: "200px", margin: "auto" }}
-                    animationData={logo}
-                  />
-                ) : (
-                  <Grid m="auto" w={"60%"} gap="5">
-                    <GridItem>
-                      <Input
-                        bgColor={"white"}
-                        h="40px"
-                        px={2}
-                        border="4px solid yellow"
-                        rounded="2xl"
-                        color={"black"}
-                        variant="unstyled"
-                        placeholder="Enter Unique Name"
-                        onChange={(e: any) => setPlayer(e.target.value)}
-                      />
-                      <button
-                        className={styles.enterbutton}
-                        onClick={handleEnterPlayer}
-                      >
-                        Enter
-                      </button>
-                    </GridItem>
-                  </Grid>
-                )}
+                {showLogo?<Lottie style={{width:"200px",margin:"auto"}} animationData={logo}/>:<Grid m="auto" w={"60%"} gap="5">
+                  <GridItem >
+                    <Input
+                     bgColor={"white"}
+                      h="40px"
+                      px={2}
+                       border="4px solid yellow"
+                       rounded="2xl"
+                      color={'black'}
+                     
+                      variant="unstyled"
+                      placeholder="Enter Unique Name"
+                      onChange={(e: any) => setPlayer(e.target.value)}
+                    />
+                    {/* <button
+                      className={styles.enterbutton}
+                      onClick={handleEnterPlayer1}
+                    >
+                      Enter
+                    </button> */}
+                  </GridItem>
+                  {/* <GridItem> */}
+                    {/* <Input
+                     bgColor={"yellow"}
+                     h="40px"
+                     px={2}
+                      border="1px solid black"
+                      rounded="2xl"
+                     color={'black'}
+                    
+                      variant="unstyled"
+                      placeholder="Enter Room Number"
+                      onChange={(e: any) => setRoom(Number(e.target.value))}
+                    /> */}
+                    {/* <button
+                      className={styles.enterbutton}
+                      onClick={handleEnterPlayer1}
+                    >
+                      Create Room
+                    </button> */}
+                  {/* </GridItem> */}
+                  <GridItem>
+                    {/* <Input
+                     bgColor={"yellow"}
+                     h="40px"
+                     px={2}
+                      border="1px solid yellow"
+                      rounded="2xl"
+                     color={'black'}
+                    
+                      variant="unstyled"
+                      placeholder="Enter Room no to Join"
+                      onChange={(e: any) => setPlayer1(e.target.value)}
+                    /> */}
+
+                    <button
+                      className={styles.enterbutton}
+                      onClick={handleEnterPlayer}
+                    >
+                      Enter
+                    </button>
+                    {/* <button
+                      className={styles.enterbutton}
+                      onClick={handleEnterPlayer1}
+                    >
+                      Join Room
+                    </button> */}
+                  </GridItem>
+                </Grid>}
+                
               </Box>
             </ScaleFade>
           </ModalBody>
