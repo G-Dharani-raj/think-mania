@@ -1,12 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Loader } from './components/Loader';
 
+import './App.css';
+import  Loader  from './components/Loader';
+import Allroutes from './pages/Allroutes';
 function App() {
   return (
     <div className="App">
-    <Loader/>
+    {/* <Loader/> */}
+    <Allroutes/>
     </div>
   );
 }
