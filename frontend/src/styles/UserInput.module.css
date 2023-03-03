@@ -12,6 +12,5 @@
 .enterbutton:hover {
   background-image: linear-gradient(to right, #3963f7, #d758e6);
   color: aliceblue;
-  letter-spacing: 10px;
   font-weight: bolder;
 }
