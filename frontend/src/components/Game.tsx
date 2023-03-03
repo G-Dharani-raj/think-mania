@@ -134,7 +134,7 @@ const Game: React.FC = () => {
                      
                       variant="unstyled"
                       placeholder="Enter Unique Name"
-                      onChange={(e: any) => setPlayer1(e.target.value)}
+                      onChange={(e: any) => setPlayer(e.target.value)}
                     />
                     {/* <button
                       className={styles.enterbutton}
@@ -179,7 +179,7 @@ const Game: React.FC = () => {
 
                     <button
                       className={styles.enterbutton}
-                      onClick={handleEnterPlayer1}
+                      onClick={handleEnterPlayer}
                     >
                       Enter
                     </button>
