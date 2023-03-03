@@ -8,7 +8,7 @@ const Allroutes = () => {
       <Route path="/" element={<Loader/>}>
        Loader Page
       </Route>
-      <Route path="/game" element={<Game/>}>
+      <Route path="/menu" element={<Game/>}>
        Game Page
       </Route>
     </Routes>

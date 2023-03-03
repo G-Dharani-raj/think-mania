@@ -11,7 +11,7 @@ const Loader: React.FC = () => {
 
 useEffect(()=>{
   const timer = setTimeout(()=>{
-    navigate("/game")
+    navigate("/menu")
   },8000);
   return ()=> clearTimeout(timer)
 },[navigate]);
