@@ -2,6 +2,7 @@ import React from 'react'
 import{Routes, Route} from "react-router-dom"
 import Game from '../components/Game'
 import Loader from '../components/Loader'
+import Play from '../components/Play'
 const Allroutes = () => {
   return (
     <Routes>
@@ -10,6 +11,9 @@ const Allroutes = () => {
       </Route>
       <Route path="/menu" element={<Game/>}>
        Game Page
+      </Route>
+      <Route path="/game" element={<Play/>}>
+       Play
       </Route>
     </Routes>
   )
