@@ -3,6 +3,7 @@ import{Routes, Route} from "react-router-dom"
 import Game from '../components/Game'
 import Loader from '../components/Loader'
 import Play from '../components/Play'
+import Result from '../components/Result'
 const Allroutes = () => {
   return (
     <Routes>
@@ -14,6 +15,9 @@ const Allroutes = () => {
       </Route>
       <Route path="/game" element={<Play/>}>
        Play
+      </Route>
+      <Route path="/result" element={<Result/>}>
+       Result
       </Route>
     </Routes>
   )

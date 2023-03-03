@@ -5,6 +5,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Page from "./components/socket placeholder/Page";
 import Game from "./components/socket placeholder/Game";
+import Result from "./components/Result";
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 			<Allroutes />
 			{/* <Page /> */}
 			{/* <Game /> */}
+			
 		</div>
 	);
 }
