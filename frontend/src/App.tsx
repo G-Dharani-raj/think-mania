@@ -9,8 +9,8 @@ import Game from "./components/socket placeholder/Game";
 function App() {
 	return (
 		<div className="App">
-			{/* <Allroutes /> */}
-			<Page />
+			<Allroutes />
+			{/* <Page /> */}
 			{/* <Game /> */}
 		</div>
 	);
