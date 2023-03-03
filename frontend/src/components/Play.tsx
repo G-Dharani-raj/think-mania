@@ -10,9 +10,10 @@ const Play:React.FC = () => {
   return (
    <Box 
    backgroundImage={`url(${background})`}
-   backgroundSize="cover"
+   backgroundSize={{base:"cover",md:"cover",lg:"cover"}}
+   backgroundPosition="center"
    backgroundRepeat="no-repeat"
-   h="100vh"
+   h={{base:"100vh",md:"100vh",lg:"100vh"}}
    filter=" brightness(70%)"
    >
     <Button onClick={home}>Home</Button>

@@ -42,10 +42,11 @@ const Game: React.FC = () => {
   };
   return (
     <Box
-      backgroundImage={`url(${background})`}
-      backgroundSize="cover"
-      backgroundRepeat="no-repeat"
-      h="100vh"
+    backgroundImage={`url(${background})`}
+    backgroundSize={{base:"cover",md:"cover",lg:"cover"}}
+    backgroundPosition="center"
+    backgroundRepeat="no-repeat"
+    h={{base:"100vh",md:"100vh",lg:"100vh"}}
       filter="grayscale(25%) brightness(70%)"
     >
       <Modal isOpen={showModal} onClose={() => {}}>
@@ -57,7 +58,7 @@ const Game: React.FC = () => {
           <ModalHeader
             m="auto"
             letterSpacing={3}
-            fontSize="5xl"
+            fontSize={{base:"5xl",md:"8xl",lg:"5xl"}}
             fontWeight="extrabold"
             color="white"
           >
@@ -67,7 +68,7 @@ const Game: React.FC = () => {
             m="auto"
             color="yellow"
             mt="-1rem"
-            fontSize={"lg"}
+            fontSize={{base:"lg",md:"2xl",lg:"lg"}}
             letterSpacing={2}
           >
             Game On, Brainiacs!
@@ -86,15 +87,16 @@ const Game: React.FC = () => {
                 
                 p="20px"
                 color="white"
-                mt="8"
+                mt={{base:"8",md:"30",lg:"8"}}
                 m="auto"
                 bg={showLogo?"none":"#8d2949"}
                 rounded="md"
                 shadow="2xl"
-                w="400px"
+                w={{base:"300px",md:"350px",lg:"400px"}}
                 h="auto"
+               
               >
-                {showLogo?<Lottie style={{width:"200px",margin:"auto"}} animationData={logo}/>:<Grid m="auto" w={"60%"} gap="5">
+                {showLogo?<Lottie style={{width:"190px",margin:"auto"}} animationData={logo}/>:<Grid m="auto" w={{base:"70%",md:"60%",lg:"60%"}} gap="5">
                   <GridItem >
                     <Input
                      bgColor={"white"}
