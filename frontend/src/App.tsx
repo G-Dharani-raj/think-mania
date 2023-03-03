@@ -1,12 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Loader } from './components/Loader';
+import { UserInput } from './components/UserInput';
 
 function App() {
   return (
     <div className="App">
-    <Loader/>
+    <UserInput/>
     </div>
   );
 }
