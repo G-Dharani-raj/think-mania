@@ -1,5 +1,5 @@
 import React from 'react'
-import{Box,Button} from "@chakra-ui/react"
+import{Box,Button, Grid, GridItem} from "@chakra-ui/react"
 import { useNavigate } from 'react-router-dom'
 import background from "../assets/2921.jpg"
 import {
@@ -35,7 +35,6 @@ const Play:React.FC = () => {
    >
     
     <Button onClick={home}>Home</Button>
-   
     
     <Modal
         //   initialFocusRef={initialRef}

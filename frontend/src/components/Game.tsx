@@ -39,7 +39,7 @@ const Game: React.FC = () => {
     try {
       console.log("working", playerName);
       axios
-        .post(`https://drab-gray-lobster-yoke.cyclic.app/register`)
+        .post(`http://localhost:8080/user/adddetails`)
         .then((res) => {
           console.log(res);
           if (res.status == 200) {
