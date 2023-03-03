@@ -1,10 +1,11 @@
-import './App.css';
-import { UserInput } from './components/UserInput';
 
+
+import './App.css';
+import Allroutes from './pages/Allroutes';
 function App() {
   return (
     <div className="App">
-    <UserInput/>
+    <Allroutes/>
     </div>
   );
 }
