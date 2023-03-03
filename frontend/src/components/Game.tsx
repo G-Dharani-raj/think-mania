@@ -20,7 +20,7 @@ import axios from "axios";
 const Game: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const { isOpen, onOpen } = useDisclosure();
-  const [player, setPlayer] = useState<String>("");
+  const [player, setPlayer] = useState<string>("");
   const [room, setRoom] = useState<Number>(1);
   const [showLogo, setShowLogo] = useState(true);
   const [showPlay, setShowPlay] = useState(false);
@@ -38,30 +38,25 @@ const Game: React.FC = () => {
     let playerName = player;
     try {
       console.log("working", playerName);
-      axios
-        .post(`http://localhost:8080/user/adddetails`)
-        .then((res) => {
-          console.log(res);
-          if (res.status == 200) {
-            toast({
-              title: "Account created.",
-              description: "We've created your account for you.",
-              status: "success",
-              duration: 9000,
-              isClosable: true,
-            });
-          } else if (res.status == 403) {
-            toast({
-              title: "User already exists.",
-              description: "Try with another awesome name",
-              status: "error",
-              duration: 9000,
-              isClosable: true,
-            });
-          }
-        })
-        .catch((err) => console.log(err));
+      let data = await axios.post(`http://localhost:8080/user/checkname`, {
+        name: player,
+      });
+      window.localStorage.setItem("username", player );
+      toast({
+        title: "Account created.",
+        description: "Looks fine, Let's go!",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
     } catch (error) {
+      toast({
+        title: "Account created.",
+        description: "Username already taken!",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
       console.log(error);
     }
   };
@@ -71,9 +66,10 @@ const Game: React.FC = () => {
   return (
     <Box
       backgroundImage={`url(${background})`}
-      backgroundSize="cover"
+      backgroundSize={{ base: "cover", md: "cover", lg: "cover" }}
+      backgroundPosition="center"
       backgroundRepeat="no-repeat"
-      h="100vh"
+      h={{ base: "100vh", md: "100vh", lg: "100vh" }}
       filter="grayscale(25%) brightness(70%)"
     >
       <Modal isOpen={showModal} onClose={() => {}}>
@@ -85,7 +81,7 @@ const Game: React.FC = () => {
           <ModalHeader
             m="auto"
             letterSpacing={3}
-            fontSize="5xl"
+            fontSize={{ base: "5xl", md: "8xl", lg: "5xl" }}
             fontWeight="extrabold"
             color="white"
           >
@@ -95,7 +91,7 @@ const Game: React.FC = () => {
             m="auto"
             color="yellow"
             mt="-1rem"
-            fontSize={"lg"}
+            fontSize={{ base: "lg", md: "2xl", lg: "lg" }}
             letterSpacing={2}
           >
             Game On, Brainiacs!
@@ -112,12 +108,12 @@ const Game: React.FC = () => {
               <Box
                 p="20px"
                 color="white"
-                mt="8"
+                mt={{ base: "8", md: "30", lg: "8" }}
                 m="auto"
                 bg={showLogo ? "none" : "#8d2949"}
                 rounded="md"
                 shadow="2xl"
-                w="400px"
+                w={{ base: "300px", md: "350px", lg: "400px" }}
                 h="auto"
               >
                 {showLogo ? (
@@ -139,12 +135,59 @@ const Game: React.FC = () => {
                         placeholder="Enter Unique Name"
                         onChange={(e: any) => setPlayer(e.target.value)}
                       />
+                      {/* <button
+                      className={styles.enterbutton}
+                      onClick={handleEnterPlayer1}
+                    >
+                      Enter
+                    </button> */}
+                    </GridItem>
+                    {/* <GridItem> */}
+                    {/* <Input
+                     bgColor={"yellow"}
+                     h="40px"
+                     px={2}
+                      border="1px solid black"
+                      rounded="2xl"
+                     color={'black'}
+                    
+                      variant="unstyled"
+                      placeholder="Enter Room Number"
+                      onChange={(e: any) => setRoom(Number(e.target.value))}
+                    /> */}
+                    {/* <button
+                      className={styles.enterbutton}
+                      onClick={handleEnterPlayer1}
+                    >
+                      Create Room
+                    </button> */}
+                    {/* </GridItem> */}
+                    <GridItem>
+                      {/* <Input
+                     bgColor={"yellow"}
+                     h="40px"
+                     px={2}
+                      border="1px solid yellow"
+                      rounded="2xl"
+                     color={'black'}
+                    
+                      variant="unstyled"
+                      placeholder="Enter Room no to Join"
+                      onChange={(e: any) => setPlayer1(e.target.value)}
+                    /> */}
+
                       <button
                         className={styles.enterbutton}
                         onClick={handleEnterPlayer}
                       >
                         Enter
                       </button>
+                      {/* <button
+                      className={styles.enterbutton}
+                      onClick={handleEnterPlayer1}
+                    >
+                      Join Room
+                    </button> */}
                     </GridItem>
                   </Grid>
                 )}
