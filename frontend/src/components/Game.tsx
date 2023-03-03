@@ -1,5 +1,7 @@
 import React from "react";
+import { Grid, GridItem, Input } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import styles from "../styles/UserInput.module.css";
 import {
   Modal,
   ModalOverlay,
@@ -16,6 +18,8 @@ import background from "../assets/3685.jpg";
 const Game: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const { isOpen, onToggle } = useDisclosure();
+  const [player1, setPlayer1] = useState<String>("");
+  const [room, setRoom] = useState<Number>(1);
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowModal(true);
@@ -24,6 +28,9 @@ const Game: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleEnterPlayer1 = () => {
+    console.log("working");
+  };
   const closeModal = () => {
     setShowModal(false);
   };
@@ -78,9 +85,52 @@ const Game: React.FC = () => {
                 w="400px"
                 h="auto"
               >
-                <Text m="auto" color="black">
-                  Let'start{" "}
-                </Text>
+                <Grid m="auto" w={"60%"} gap="5">
+                  <GridItem >
+                    <Input
+                      color={'black'}
+                      size={"80"}
+                      variant="filled"
+                      placeholder="Enter Unique Name"
+                      onChange={(e: any) => setPlayer1(e.target.value)}
+                    />
+                    <button
+                      className={styles.enterbutton}
+                      onClick={handleEnterPlayer1}
+                    >
+                      Enter
+                    </button>
+                  </GridItem>
+                  <GridItem>
+                    <Input
+                      size={"40"}
+                      variant="filled"
+                      placeholder="Enter Room Number"
+                      onChange={(e: any) => setRoom(Number(e.target.value))}
+                    />
+                    <button
+                      className={styles.enterbutton}
+                      onClick={handleEnterPlayer1}
+                    >
+                      Create Room
+                    </button>
+                  </GridItem>
+                  <GridItem>
+                    <Input
+                    bgColor={'yellow'}
+                      size={"40"}
+                      variant="filled"
+                      placeholder="Enter Room no to Join"
+                      onChange={(e: any) => setPlayer1(e.target.value)}
+                    />
+                    <button
+                      className={styles.enterbutton}
+                      onClick={handleEnterPlayer1}
+                    >
+                      Join Room
+                    </button>
+                  </GridItem>
+                </Grid>
               </Box>
             </ScaleFade>
           </ModalBody>
