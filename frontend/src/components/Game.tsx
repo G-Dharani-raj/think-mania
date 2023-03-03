@@ -1,21 +1,19 @@
 import React from "react";
-import { Grid, GridItem, Input } from "@chakra-ui/react";
+import { Grid, GridItem, Input, useToast } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "../styles/UserInput.module.css";
 import logo from "../assets/Comp 1.json";
 import Lottie from "lottie-react";
 import {
   Modal,
-  ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Button,
-  ModalCloseButton,
 } from "@chakra-ui/react";
-import { Fade, ScaleFade, Slide, SlideFade } from "@chakra-ui/react";
+import { ScaleFade } from "@chakra-ui/react";
 import { Box, Text, useDisclosure } from "@chakra-ui/react";
 import background from "../assets/3685.jpg";
 import axios from "axios";
@@ -34,14 +32,38 @@ const Game: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, []);
-
-  const handleEnterPlayer = () => {
+  const toast = useToast();
+  ////sending user's name to backend
+  const handleEnterPlayer = async () => {
     let playerName = player;
-    console.log("working", playerName);
-    axios
-      .post(`https://drab-gray-lobster-yoke.cyclic.app/register`)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    try {
+      console.log("working", playerName);
+      axios
+        .post(`https://drab-gray-lobster-yoke.cyclic.app/register`)
+        .then((res) => {
+          console.log(res);
+          if (res.status == 200) {
+            toast({
+              title: "Account created.",
+              description: "We've created your account for you.",
+              status: "success",
+              duration: 9000,
+              isClosable: true,
+            });
+          } else if (res.status == 403) {
+            toast({
+              title: "User already exists.",
+              description: "Try with another awesome name",
+              status: "error",
+              duration: 9000,
+              isClosable: true,
+            });
+          }
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error);
+    }
   };
   const closeModal = () => {
     setShowModal(false);
@@ -123,53 +145,6 @@ const Game: React.FC = () => {
                       >
                         Enter
                       </button>
-                    </GridItem>
-                    {/* <GridItem> */}
-                    {/* <Input
-                     bgColor={"yellow"}
-                     h="40px"
-                     px={2}
-                      border="1px solid black"
-                      rounded="2xl"
-                     color={'black'}
-                    
-                      variant="unstyled"
-                      placeholder="Enter Room Number"
-                      onChange={(e: any) => setRoom(Number(e.target.value))}
-                    /> */}
-                    {/* <button
-                      className={styles.enterbutton}
-                      onClick={handleEnterPlayer1}
-                    >
-                      Create Room
-                    </button> */}
-                    {/* </GridItem> */}
-                    <GridItem>
-                      {/* <Input
-                     bgColor={"yellow"}
-                     h="40px"
-                     px={2}
-                      border="1px solid yellow"
-                      rounded="2xl"
-                     color={'black'}
-                    
-                      variant="unstyled"
-                      placeholder="Enter Room no to Join"
-                      onChange={(e: any) => setPlayer1(e.target.value)}
-                    /> */}
-
-                      {/* <button
-                      className={styles.enterbutton}
-                      onClick={handleEnterPlayer1}
-                    >
-                      Enter
-                    </button> */}
-                      {/* <button
-                      className={styles.enterbutton}
-                      onClick={handleEnterPlayer1}
-                    >
-                      Join Room
-                    </button> */}
                     </GridItem>
                   </Grid>
                 )}
