@@ -15,13 +15,17 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/movies", movieRouter);
 
+app.get("/", (req, res) => {
+	res.send("Home Page");
+});
+
 const server = http.createServer(app);
 const io = new Server(server, {
 	cors: {
 		origin: "*",
 	},
 });
-let rooms = { js: undefined };
+let rooms = [];
 io.on("connection", (socket) => {
 	socket.on("create_room", () => {
 		let roomId = shortid.generate();
