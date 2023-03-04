@@ -38,7 +38,7 @@ const Game: React.FC = () => {
     let playerName = player;
     try {
       console.log("working", playerName);
-      let data = await axios.post(`http://localhost:8080/user/checkname`, {
+      let data = await axios.post(`https://drab-yak-button.cyclic.app/user/checkname`, {
         name: player,
       });
       window.localStorage.setItem("username", player );
@@ -46,7 +46,7 @@ const Game: React.FC = () => {
         title: "Account created.",
         description: "Looks fine, Let's go!",
         status: "success",
-        duration: 9000,
+        duration: 1500,
         isClosable: true,
       });
     } catch (error) {
@@ -54,7 +54,7 @@ const Game: React.FC = () => {
         title: "Account created.",
         description: "Username already taken!",
         status: "error",
-        duration: 9000,
+        duration: 1500,
         isClosable: true,
       });
       console.log(error);

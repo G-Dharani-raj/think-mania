@@ -43,7 +43,7 @@ const Play: React.FC = () => {
 
   const handleQuestions = async () => {
     try {
-      let res = await axios.get(`http://localhost:8080/movies/getmovies`);
+      let res = await axios.get(`https://drab-yak-button.cyclic.app/movies/getmovies`);
       console.log(res);
       setQuestion(res.data[0].emojis);
       setCount((pre) => pre + 1);
@@ -81,7 +81,7 @@ const Play: React.FC = () => {
     navigate("/menu");
   };
   useEffect(() => {
-    if (count === 5) {
+    if (count === 5+1) {
       window.localStorage.setItem("scores", scores + "");
       navigate("/result");
     }
