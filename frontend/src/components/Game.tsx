@@ -195,7 +195,7 @@ const Game: React.FC = () => {
             </ScaleFade>
           </ModalBody>
           <ModalFooter>
-            {!showPlay ? (
+            {!showPlay  ? (
               <Button
                 letterSpacing={1}
                 size="md"
@@ -228,6 +228,7 @@ const Game: React.FC = () => {
               <Link to="/game" style={{ margin: "auto" }}>
                 {" "}
                 <Button
+                isDisabled={!player}
                   letterSpacing={3}
                   size="md"
                   fontSize="2xl"
