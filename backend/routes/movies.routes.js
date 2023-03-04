@@ -8,7 +8,9 @@ movieRouter.get("/getmovies", async (req, res) => {
 	try {
 		let data = await MovieModel.aggregate([{ $sample: { size: 1 } }]);
 		res.send(data);
-	} catch (error) {}
+	} catch (error) {
+		res.status(500).send(error.message);
+	}
 });
 
 movieRouter.post("/addmovie", async (req, res) => {
