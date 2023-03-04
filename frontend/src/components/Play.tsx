@@ -1,8 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Button, Grid, GridItem, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  useToast,
+  Heading,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import background from "../assets/2921.jpg";
 import "../styles/Buzz.css";
+import { FcHome } from "react-icons/fc";
+import Tutorial from "./Tutorial";
 import {
   Modal,
   ModalOverlay,
@@ -29,15 +38,15 @@ const Play: React.FC = () => {
   const [answer, setAnswer] = useState<string>("");
   const [palyerAns, setPlayerAns] = useState("");
   const [scores, setScores] = useState<number>(0);
-  const [count,setCount] = useState<number>(0)
+  const [count, setCount] = useState<number>(0);
   const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleQuestions = async () => {
     try {
-      let res = await axios.get(`http://localhost:8080/movies/getmovies`);
+      let res = await axios.get(`https://drab-yak-button.cyclic.app/movies/getmovies`);
       console.log(res);
       setQuestion(res.data[0].emojis);
-      setCount(pre=>pre+1)
+      setCount((pre) => pre + 1);
       startTimer();
       setAnswer(res.data[0].name);
     } catch (error) {
@@ -72,7 +81,7 @@ const Play: React.FC = () => {
     navigate("/menu");
   };
   useEffect(() => {
-    if (count === 5) {
+    if (count === 5+1) {
       window.localStorage.setItem("scores", scores + "");
       navigate("/result");
     }
@@ -145,7 +154,11 @@ const Play: React.FC = () => {
       h={{ base: "100vh", md: "100vh", lg: "100vh" }}
       filter=" brightness(90%)"
     >
-      <Button onClick={home}>Home</Button>
+      <Box ml="26%" w="120px" textAlign="center">
+        <Button variant={"unstyled"} onClick={home}>
+          <FcHome size={"100%"} />
+        </Button>
+      </Box>
 
       <Modal
         //   initialFocusRef={initialRef}
@@ -160,9 +173,10 @@ const Play: React.FC = () => {
           bgColor="rgba(0,0,0,0)"
         >
           <ModalBody pb={0} mt={10}>
-            <FormControl isRequired={true}>
+            <Tutorial />
+            {/* <FormControl isRequired={true}>
               <Input
-                // maxLength={""}
+              
 
                 bgColor={"white"}
                 h="40px"
@@ -173,7 +187,7 @@ const Play: React.FC = () => {
                 variant="unstyled"
                 placeholder="Enter room id to join"
               />
-            </FormControl>
+            </FormControl> */}
           </ModalBody>
 
           <ModalFooter>
@@ -205,9 +219,13 @@ const Play: React.FC = () => {
                 handleQuestions();
               }}
             >
-              Submit
+              Continue
             </Button>
           </ModalFooter>
+          <Text m="auto" textAlign="center" size="xs" as={"code"} color="white">
+            
+            Continue to start the game & countdown⏱ <br /> All the best👍
+          </Text>
         </ModalContent>
       </Modal>
       <Box
@@ -330,11 +348,28 @@ const Play: React.FC = () => {
           >
             Submit
           </Button>
-          <Text>{scores}</Text>
+          <Heading
+            color={"yellow"}
+            textShadow="inner"
+            as={"switch"}
+            display="flex"
+            flexDirection={"column"}
+            alignItems="center"
+            justifyContent="center"
+            w="80%"
+            h="75px"
+            fontSize={"6xl"}
+            m="auto"
+          >
+            <Text fontSize="lg" as="i" color="white" mb="-1">
+              Your Score:
+            </Text>
+            {scores}
+          </Heading>
         </Grid>
       </Box>
 
-      <Box w="20%" h="auto" px="63px" m="auto" mt={"4rem"}>
+      <Box w="18%" h="auto" px="63px" m="auto" mt={"3rem"}>
         <Button variant="unstyled" onClick={stopTimer} disabled={!timerRunning}>
           <button className="button-82-pushable" role="button">
             <span className="button-82-shadow"></span>
