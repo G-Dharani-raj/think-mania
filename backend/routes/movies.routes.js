@@ -6,7 +6,8 @@ const movieRouter = express.Router();
 
 movieRouter.get("/getmovies", async (req, res) => {
 	try {
-		let data = await MovieModel.aggregate([{ $sample: { size: 1 } }]);
+		// let data = await MovieModel.aggregate([{ $sample: { size: 1 } }]);
+		let data = await MovieModel.find();
 		res.send(data);
 	} catch (error) {
 		res.status(500).send(error.message);
