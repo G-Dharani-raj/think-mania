@@ -25,6 +25,8 @@ const Result: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const navigate = useNavigate();
   const home = () => {
+    localStorage.removeItem('username')
+    localStorage.removeItem('scores')
     navigate("/menu");
   };
   const winScores = Number(localStorage.getItem("scores"));
@@ -39,7 +41,7 @@ const Result: React.FC = () => {
       filter=" brightness(70%)"
     >
       <Button onClick={home}>Home</Button>
-{winScores >= 5 ?
+{winScores >= 4?
       <Box  margin={"auto"} backgroundImage={`url(${win})`}
            w={'30%'} display="flex"  justifyContent="center" alignItems={'center'} 
            flexDirection={"column"} gap="10px"

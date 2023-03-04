@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Button, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Button, Grid, GridItem, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import background from "../assets/2921.jpg";
 import "../styles/Buzz.css";
@@ -29,6 +29,7 @@ const Play: React.FC = () => {
   const [answer, setAnswer] = useState<string>("");
   const [palyerAns, setPlayerAns] = useState("");
   const [scores, setScores] = useState<number>(0);
+  const [count,setCount] = useState<number>(0)
   const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleQuestions = async () => {
@@ -36,6 +37,8 @@ const Play: React.FC = () => {
       let res = await axios.get(`http://localhost:8080/movies/getmovies`);
       console.log(res);
       setQuestion(res.data[0].emojis);
+      setCount(pre=>pre+1)
+      startTimer();
       setAnswer(res.data[0].name);
     } catch (error) {
       console.log(error);
@@ -69,26 +72,69 @@ const Play: React.FC = () => {
     navigate("/menu");
   };
   useEffect(() => {
-    if (scores >= 2) {
-      window.localStorage.setItem("scores", scores+"" );
+    if (count === 5) {
+      window.localStorage.setItem("scores", scores + "");
       navigate("/result");
-      
     }
-  }, [scores]);
+    // if (count === 5) {
+    //   window.localStorage.setItem("scores", scores + "");
+    //   navigate("/result");
+    // }
+  }, [count]);
   const check = () => {
+    if (palyerAns === "") {
+      toast({
+        title: "Opps",
+        description: "please fill the answer",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
     if (palyerAns === answer) {
-      alert(`You are right`);
-
+      toast({
+        title: "Correct Answer",
+        status: "success",
+        duration: 1000,
+        isClosable: true,
+      });
+      handleQuestions();
       setScores((prev) => prev + 2);
     } else {
       alert(`You are wrong`);
-      setScores((prev) => prev - 2);
+      if (scores >= 2) {
+        setScores((prev) => prev - 2);
+      }
     }
-    handleQuestions();
+    // handleQuestions();
     setPlayerAns("");
   };
-  console.log(answer);
-  console.log(question);
+  // console.log(answer);
+  // console.log(question);
+  const toast = useToast();
+  useEffect(() => {
+    if (countdown == 0) {
+      if (scores > 0) {
+        setScores((prev) => prev - 2);
+      }
+
+      handleQuestions();
+
+      toast({
+        title: "Time-up",
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+      });
+      toast({
+        title: "Try again",
+        description: `right answer is 👉 ${answer}`,
+        status: "success",
+        duration: 1000,
+        isClosable: true,
+      });
+    }
+  }, [countdown]);
 
   return (
     <Box
