@@ -21,4 +21,13 @@ movieRouter.post("/addmovie", async (req, res) => {
 	}
 });
 
+movieRouter.get("/singleplayer", async (req, res) => {
+	try {
+		let data = await MovieModel.aggregate([{ $sample: { size: 10 } }]);
+		res.status(200).send(data);
+	} catch (error) {
+		res.status(500).send(error.message);
+	}
+});
+
 module.exports = movieRouter;
