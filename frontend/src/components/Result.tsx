@@ -61,16 +61,14 @@ const Result: React.FC = () => {
       h={{ base: "100vh", md: "100vh", lg: "100vh" }}
       filter="grayscale(25%) brightness(80%)"
     >
-      <Box ml="26%" w="120px" textAlign="center">
-        <Button variant={"unstyled"} onClick={home}>
-          <FcHome size={"100%"} />
-        </Button>
-      </Box>
-      {winScores >= 5 ? (
+
+      <Box ml={{lg:"26%"}} w="120px" textAlign="center" ><Button variant={"unstyled"} onClick={home}><FcHome size={"100%"}/></Button></Box>
+      {winScores >= 6 ? (
+
         <Box
           margin={"auto"}
           backgroundImage={`url(${win})`}
-          w={"30%"}
+          w={{base:"80%",md:"60%",lg:"30%"}}
           display="flex"
           justifyContent="center"
           alignItems={"center"}
@@ -163,7 +161,7 @@ const Result: React.FC = () => {
         <Box
           margin={"auto"}
           backgroundImage={`url(${lose})`}
-          w={"30%"}
+          w={{base:"80%",md:"60%",lg:"30%"}}
           display="flex"
           justifyContent="center"
           alignItems={"center"}

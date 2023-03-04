@@ -94,8 +94,9 @@ const Game: React.FC = () => {
             fontSize={{ base: "lg", md: "2xl", lg: "lg" }}
             letterSpacing={2}
           >
-            Game On, Brainiacs!
-          </Text>
+            Game On, Brainiacs!</Text>
+{ !showPlay ?<Text color="white" fontSize="sm" textAlign="center">Are you a true movie lover? Let's find out with this guessing game !</Text>:
+ <Text color="white" fontSize="md" textAlign="center"> Think you're a true movie buff? Guess the movie from just a few clues !</Text> }          
           <ModalBody
             w="auto"
             h="auto"

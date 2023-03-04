@@ -154,7 +154,7 @@ const Play: React.FC = () => {
       h={{ base: "100vh", md: "100vh", lg: "100vh" }}
       filter=" brightness(90%)"
     >
-      <Box ml="26%" w="120px" textAlign="center">
+      <Box ml={{lg:"26%"}} w="120px" textAlign="center">
         <Button variant={"unstyled"} onClick={home}>
           <FcHome size={"100%"} />
         </Button>
@@ -275,10 +275,11 @@ const Play: React.FC = () => {
 
       <Box
         bg="gray.800"
-        w="30%"
+        w={{base:"80%",md:"50%",lg:"30%"}}
         h="150px"
         m="auto"
-        mt="3rem"
+        mt={{base:"3rem",md:"3rem",lg:"3rem"}}
+        mb={{base:"2rem",md:"0rem",lg:"0rem"}}
         rounded="md"
         boxShadow="md"
         display="flex"
@@ -369,7 +370,7 @@ const Play: React.FC = () => {
         </Grid>
       </Box>
 
-      <Box w="18%" h="auto" px="63px" m="auto" mt={"3rem"}>
+      <Box w={{base:"24%",md:"18%",lg:"18%"}} h="auto" px={{base:"0px",md:"0px",lg:"63px"}} m="auto" mt={"3rem"}>
         <Button variant="unstyled" onClick={stopTimer} disabled={!timerRunning}>
           <button className="button-82-pushable" role="button">
             <span className="button-82-shadow"></span>
