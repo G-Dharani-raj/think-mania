@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Stack, Image, Heading, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import background from "../assets/3685.jpg";
@@ -38,8 +38,28 @@ const Result: React.FC = () => {
     score: number;
   }
   const [leaders, setLeaders] = useState<user[]>([]);
+
   const winScores = Number(localStorage.getItem("scores"));
   const winUser = localStorage.getItem("username");
+
+  const sendLeaders = async () => {
+    let user = {
+      name: winUser,
+      score: winScores,
+    };
+
+    try {
+      let res = await axios.post(
+        `https://drab-yak-button.cyclic.app/user/adddetails`,
+        user
+      );
+      console.log(res.data, "jasdghasvdjhavskj");
+      setLeaders(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleLeaders = async () => {
     try {
       let res = await axios.get(
@@ -61,14 +81,16 @@ const Result: React.FC = () => {
       h={{ base: "100vh", md: "100vh", lg: "100vh" }}
       filter="grayscale(25%) brightness(80%)"
     >
-
-      <Box ml={{lg:"26%"}} w="120px" textAlign="center" ><Button variant={"unstyled"} onClick={home}><FcHome size={"100%"}/></Button></Box>
+      <Box ml={{ lg: "26%" }} w="120px" textAlign="center">
+        <Button variant={"unstyled"} onClick={home}>
+          <FcHome size={"100%"} />
+        </Button>
+      </Box>
       {winScores >= 6 ? (
-
         <Box
           margin={"auto"}
           backgroundImage={`url(${win})`}
-          w={{base:"80%",md:"60%",lg:"30%"}}
+          w={{ base: "80%", md: "60%", lg: "30%" }}
           display="flex"
           justifyContent="center"
           alignItems={"center"}
@@ -112,6 +134,7 @@ const Result: React.FC = () => {
             onClick={() => {
               onOpen();
               handleLeaders();
+              sendLeaders();
             }}
           >
             Leaderboard
@@ -133,17 +156,15 @@ const Result: React.FC = () => {
                       </Tr>
                     </Thead>
                     <Tbody>
-                      <Tr>
-                        {leaders.length > 0 &&
-                          leaders.map((el) => {
-                            return (
-                              <>
-                                <Td> {el.name} </Td>
-                                <Td> {el.score} </Td>
-                              </>
-                            );
-                          })}
-                      </Tr>
+                      {leaders.length > 0 &&
+                        leaders.map((el) => {
+                          return (
+                            <>
+                              <Td> {el.name} </Td>
+                              <Td> {el.score} </Td>
+                            </>
+                          );
+                        })}
                     </Tbody>
                   </Table>
                 </TableContainer>
@@ -161,7 +182,7 @@ const Result: React.FC = () => {
         <Box
           margin={"auto"}
           backgroundImage={`url(${lose})`}
-          w={{base:"80%",md:"60%",lg:"30%"}}
+          w={{ base: "80%", md: "60%", lg: "30%" }}
           display="flex"
           justifyContent="center"
           alignItems={"center"}
