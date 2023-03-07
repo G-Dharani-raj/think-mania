@@ -44,8 +44,8 @@ const Result: React.FC = () => {
 
   const sendLeaders = async () => {
     let user = {
-      name: winUser,
-      score: winScores,
+      name: localStorage.getItem("username"),
+      score: Number(localStorage.getItem("scores")),
     };
 
     try {
@@ -53,25 +53,28 @@ const Result: React.FC = () => {
         `https://drab-yak-button.cyclic.app/user/adddetails`,
         user
       );
-      console.log(res.data, "jasdghasvdjhavskj");
-      setLeaders(res.data);
+      console.log(res.data, "leader name posted");
+      // setLeaders(res.data);
     } catch (error) {
       console.log(error);
     }
   };
-
+useEffect(()=>{
+  sendLeaders()
+},[])
   const handleLeaders = async () => {
     try {
       let res = await axios.get(
         `https://drab-yak-button.cyclic.app/user/leaderboard`
       );
-      console.log(res.data, "jasdghasvdjhavskj");
+      console.log(res.data, "getting 10 leaders");
       setLeaders(res.data);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(winScores, winUser, " jhsdgfh");
+  //console.log(winScores, winUser, " local storaage");
+  console.log(leaders, "10");
   return (
     <Box
       backgroundImage={`url(${background})`}
@@ -131,10 +134,26 @@ const Result: React.FC = () => {
             {winScores}
           </Heading>
           <Button
+            letterSpacing={"1px"}
+            size="md"
+            fontSize="2xl"
+            fontWeight="bold"
+            colorScheme="purple"
+            borderRadius="full"
+            boxShadow="0px 0px 10px rgba(0, 0, 0, 0.25)"
+            _hover={{
+              bg: "purple.700",
+              boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.25)",
+            }}
+            _active={{
+              bg: "purple.800",
+              boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)",
+            }}
+            _focus={{ boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)" }}
             onClick={() => {
               onOpen();
+              
               handleLeaders();
-              sendLeaders();
             }}
           >
             Leaderboard
@@ -160,8 +179,10 @@ const Result: React.FC = () => {
                         leaders.map((el) => {
                           return (
                             <>
-                              <Td> {el.name} </Td>
-                              <Td> {el.score} </Td>
+                              <Tr>
+                                <Td> {el.name} </Td>
+                                <Td> {el.score} </Td>
+                              </Tr>
                             </>
                           );
                         })}
@@ -219,6 +240,22 @@ const Result: React.FC = () => {
             {winScores}
           </Heading>
           <Button
+            letterSpacing={"1px"}
+            size="md"
+            fontSize="2xl"
+            fontWeight="bold"
+            colorScheme="purple"
+            borderRadius="full"
+            boxShadow="0px 0px 10px rgba(0, 0, 0, 0.25)"
+            _hover={{
+              bg: "purple.700",
+              boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.25)",
+            }}
+            _active={{
+              bg: "purple.800",
+              boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)",
+            }}
+            _focus={{ boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.25)" }}
             onClick={() => {
               onOpen();
               handleLeaders();
@@ -243,12 +280,15 @@ const Result: React.FC = () => {
                       </Tr>
                     </Thead>
                     <Tbody>
-                      <Tr>
-                        {leaders.length > 0 &&
-                          leaders.map((el) => {
-                            return <Td> </Td>;
-                          })}
-                      </Tr>
+                      {leaders.length > 0 &&
+                        leaders.map((el) => {
+                          return (
+                            <Tr>
+                              <Td> {el.name} </Td>
+                              <Td> {el.score} </Td>
+                            </Tr>
+                          );
+                        })}
                     </Tbody>
                   </Table>
                 </TableContainer>

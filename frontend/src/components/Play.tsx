@@ -110,19 +110,25 @@ const Play: React.FC = () => {
       handleQuestions();
       setScores((prev) => prev + 2);
     } else {
-      alert(`You are wrong`);
+      toast({
+        title: "Wrong Answer",
+        status: "error",
+        duration: 1500,
+        isClosable: true,
+      });
       if (scores >= 2) {
         setScores((prev) => prev - 2);
       }
+      handleQuestions();
     }
-    // handleQuestions();
+    
     setPlayerAns("");
   };
   // console.log(answer);
   // console.log(question);
   const toast = useToast();
   useEffect(() => {
-    if (countdown == 0) {
+    if (countdown === 0) {
       if (scores > 0) {
         setScores((prev) => prev - 2);
       }
@@ -317,7 +323,7 @@ const Play: React.FC = () => {
               rounded="2xl"
               color={"black"}
               variant="unstyled"
-              placeholder="Enter Answer"
+              placeholder="give answer in lower case"
             />
           </GridItem>
 

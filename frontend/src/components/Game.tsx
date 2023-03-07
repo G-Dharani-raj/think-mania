@@ -38,12 +38,15 @@ const Game: React.FC = () => {
     let playerName = player;
     try {
       console.log("working", playerName);
-      let data = await axios.post(`https://drab-yak-button.cyclic.app/user/checkname`, {
-        name: player,
-      });
-      window.localStorage.setItem("username", player );
+      let data = await axios.post(
+        `https://drab-yak-button.cyclic.app/user/checkname`,
+        {
+          name: player,
+        }
+      );
+      window.localStorage.setItem("username", player);
       toast({
-        title: "Account created.",
+        title: "Username added",
         description: "Looks fine, Let's go!",
         status: "success",
         duration: 1500,
@@ -51,7 +54,7 @@ const Game: React.FC = () => {
       });
     } catch (error) {
       toast({
-        title: "Account created.",
+        title: "Already exists!",
         description: "Username already taken!",
         status: "error",
         duration: 1500,
@@ -94,9 +97,20 @@ const Game: React.FC = () => {
             fontSize={{ base: "lg", md: "2xl", lg: "lg" }}
             letterSpacing={2}
           >
-            Game On, Brainiacs!</Text>
-{ !showPlay ?<Text color="white" fontSize="sm" textAlign="center">Are you a true movie lover? Let's find out with this guessing game !</Text>:
- <Text color="white" fontSize="md" textAlign="center"> Think you're a true movie buff? Guess the movie from just a few clues !</Text> }          
+            Game On, Brainiacs!
+          </Text>
+          {!showPlay ? (
+            <Text color="white" fontSize="sm" textAlign="center">
+              Are you a true movie lover? Let's find out with this guessing game
+              !
+            </Text>
+          ) : (
+            <Text color="white" fontSize="md" textAlign="center">
+              {" "}
+              Think you're a true movie buff? Guess the movie from just a few
+              clues !
+            </Text>
+          )}
           <ModalBody
             w="auto"
             h="auto"
@@ -196,7 +210,7 @@ const Game: React.FC = () => {
             </ScaleFade>
           </ModalBody>
           <ModalFooter>
-            {!showPlay  ? (
+            {!showPlay ? (
               <Button
                 letterSpacing={1}
                 size="md"
@@ -229,7 +243,7 @@ const Game: React.FC = () => {
               <Link to="/game" style={{ margin: "auto" }}>
                 {" "}
                 <Button
-                isDisabled={!player}
+                  isDisabled={!player}
                   letterSpacing={3}
                   size="md"
                   fontSize="2xl"
