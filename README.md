@@ -1,4 +1,6 @@
-<h1 align="center" id="title">Hackathon-Think Mania</h1>
+<h1 align="center" id="title">Think Mania</h1> <h4 align="center">Hackathon Runner-up</h4>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/110104542/224235609-869e241e-e992-478d-acb5-0cc675cd8e48.png" alt="project-image" width="300" height="150/"></p>
 <hr/>
 
 ## Collaborators-
